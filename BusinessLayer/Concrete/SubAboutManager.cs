@@ -18,17 +18,17 @@ namespace BusinessLayer.Concrete
             _subAboutDal = subAboutDal;
         }
 
-        public SubAbout GetByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void TAdd(SubAbout t)
         {
             throw new NotImplementedException();
         }
 
         public void TDelete(SubAbout t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SubAbout TGetByID(int id)
         {
             throw new NotImplementedException();
         }

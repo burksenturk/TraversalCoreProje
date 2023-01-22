@@ -18,9 +18,9 @@ namespace BusinessLayer.Concrete
             _destinationDal = destinationDal;
         }
 
-        public Destination GetByID(int id)
+        public Destination TGetByID(int id)  //IGenericService den implemente
         {
-            throw new NotImplementedException();
+            return _destinationDal.GetByID(id);  //IgenericDal dan implemente
         }
 
         public void TAdd(Destination t)

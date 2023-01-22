@@ -18,11 +18,6 @@ namespace BusinessLayer.Concrete
             _aboutDal = aboutDal;
         }
 
-        public About GetByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void TAdd(About t)
         {
             _aboutDal.Insert(t);
@@ -31,6 +26,11 @@ namespace BusinessLayer.Concrete
         public void TDelete(About t)
         {
             _aboutDal.Delete(t);
+        }
+
+        public About TGetByID(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<About> TGetList()

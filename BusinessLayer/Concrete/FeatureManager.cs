@@ -17,18 +17,17 @@ namespace BusinessLayer.Concrete
         {
             _featureDal = featureDal;
         }
-
-        public Feature GetByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void TAdd(Feature t)
         {
             throw new NotImplementedException();
         }
 
         public void TDelete(Feature t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Feature TGetByID(int id)
         {
             throw new NotImplementedException();
         }
