@@ -3,6 +3,7 @@ using DataAccessLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +29,12 @@ namespace DataAccessLayer.Repository
         {
             using var c = new Context();
             return c.Set<T>().ToList();
+        }
+
+        public List<T> GetListByFilter(Expression<Func<T, bool>> filter)
+        {
+            using var c = new Context();
+            return c.Set<T>().Where(filter).ToList();  //T den gelen değer şartım filter dan döecenk olan değer
         }
 
         public void Insert(T t)
