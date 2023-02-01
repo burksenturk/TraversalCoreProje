@@ -1,13 +1,19 @@
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using TraversalCoreProje.Models;
 
 namespace TraversalCoreProje
 {
@@ -23,7 +29,20 @@ namespace TraversalCoreProje
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Context>(); //amacýmýz Identity yapýsýný  ConfigureServices içerisinde tanýmlamak hem de proje seviyesinde bir authentication uygulamak ki sadece benim istediðim sayfalarda bu authentication kodlarý aalowanonymous komutuyla bunu bozabiliriz
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();//Identity yapýlandýramsýný eklemiþ olduk  ConfigureServices A
             services.AddControllersWithViews();
+
+            //proje seviyesinde bir authentication iþlemi kullanýyor olucaz
+            services.AddMvc(config=>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser() //kullanýcýnýn mutlaka Authenticate olmasý lazým.
+                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +51,7 @@ namespace TraversalCoreProje
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -41,7 +61,7 @@ namespace TraversalCoreProje
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -51,6 +71,14 @@ namespace TraversalCoreProje
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

@@ -169,14 +169,14 @@
                         </div>
                     </div>
                     <!--//author-card-->
-                    @await Component.InvokeAsync("_CommentList",new {id = ViewBag.i} )   @*commentlist için destinationdetailse ait değerler gelmiş olacak*@
-                    @await Html.PartialAsync("~/Views/Comment/AddComment.cshtml")
+                    @await Component.InvokeAsync("_CommentList",new {id = ViewBag.i} )   @*commentlist için destinationdetailse ait değerler gelmiş olacak .. yorumları getiriyor*@
+                    @await Html.PartialAsync("~/Views/Comment/AddComment.cshtml")          @*yapılan yorumları ekliyor*@
 
 
 
                 </div>
             </div>
-            <!--//blog-post-->
+           
             </div>
     </section>
 
