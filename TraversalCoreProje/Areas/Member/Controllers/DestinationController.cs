@@ -7,7 +7,7 @@ namespace TraversalCoreProje.Areas.Member.Controllers
 {
     [AllowAnonymous]
     [Area("Member")]
-    public class DestinationController : Controller  //bunu öylesine açtı veri göstermek için
+    public class DestinationController : Controller  //bunu öylesine açtık veri göstermek için
     {
         DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
         public IActionResult Index()
