@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace TraversalCoreProje.ViewComponents.Default
 {
@@ -8,10 +9,12 @@ namespace TraversalCoreProje.ViewComponents.Default
     {
         FeatureManager featureManager = new FeatureManager(new EfFeatureDal());
         public IViewComponentResult Invoke()
-        {//getlist gerekmiyor viewbag ler ile taşıcaz
-            
-            
-            return View();
-        }
+        {
+            //getlist gerekmiyor viewbag ler ile taşıcaz
+
+			
+            return View(); 
+
+		}
     }
 }
