@@ -21,6 +21,7 @@ namespace TraversalCoreProje.Controllers
         {
             p.Date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             p.CommentState = true;
+            //p.DestinationID = 3;
             commentManager.TAdd(p);
             return RedirectToAction("Index", "Destination");  //destination içerisinde yer alan index e yönlendir diyoruz
         }

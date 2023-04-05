@@ -38,7 +38,7 @@ namespace TraversalCoreProje.Controllers
             };
             if (p.Password == p.ConfirmPassword)
             {
-                var result = await _userManager.CreateAsync(appUser, p.Password);  //şifre olusturnmak
+                var result = await _userManager.CreateAsync(appUser, p.Password);  
 
                 if (result.Succeeded)
                 {
