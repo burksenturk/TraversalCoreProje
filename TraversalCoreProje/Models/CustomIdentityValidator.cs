@@ -36,5 +36,13 @@ namespace TraversalCoreProje.Models
                 Description = "Parola en az 1 sembol içermelidir"
             };
         }
+        public override IdentityError PasswordRequiresDigit()
+        {
+            return new IdentityError()
+            {
+                Code = "PasswordRequiresDigit",
+                Description = "Parola en az 1 rakam içermelidir"
+            };
+        }
     }
 }

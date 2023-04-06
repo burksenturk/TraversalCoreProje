@@ -61,7 +61,7 @@ namespace TraversalCoreProje.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignIn(UserSıgnInViewModel p )  //bunun diğer metoddan ayrılması için buna p parametresini verdik
+        public async Task<IActionResult> SignIn(UserSıgnInViewModel p )  
         {
             if(ModelState.IsValid)  //eğer model geçerliyse
             {
