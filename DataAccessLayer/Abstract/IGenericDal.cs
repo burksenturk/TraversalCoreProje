@@ -14,6 +14,6 @@ namespace DataAccessLayer.Abstract
         void Update(T t);
         List<T> GetList();
         T GetByID(int id);
-        List<T> GetListByFilter(Expression<Func<T, bool>> filter); //coments den dolayı yazdık bu metotu
+        List<T> GetListByFilter(Expression<Func<T, bool>> filter); 
     }
 }

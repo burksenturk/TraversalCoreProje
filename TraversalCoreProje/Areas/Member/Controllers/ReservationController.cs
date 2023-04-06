@@ -1,10 +1,12 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TraversalCoreProje.Areas.Member.Controllers
 {
@@ -14,6 +16,14 @@ namespace TraversalCoreProje.Areas.Member.Controllers
         DestinationManager destinationManager = new DestinationManager(new EfDestinationDal());
 
         ReservationManager reservationManager = new ReservationManager(new EfReservationDal());
+
+        private readonly UserManager<AppUser> _userManager; //Autantice olan kullanıcının Appuser id sine ulasmak için ekledim. 
+
+        public ReservationController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult MyCurrentReservation()
         {
             return View();
@@ -21,6 +31,12 @@ namespace TraversalCoreProje.Areas.Member.Controllers
         public IActionResult MyOldReservation()
         {
             return View();
+        }
+        public async Task<IActionResult> MyApprovalReservation()
+        {
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            var valueslist = reservationManager.GetListApprovalReservation(values.Id);
+            return View(valueslist);
         }
 
         [HttpGet]
@@ -39,7 +55,7 @@ namespace TraversalCoreProje.Areas.Member.Controllers
         [HttpPost]
         public IActionResult NewReservation(Reservation p)
         {
-            p.AppUserId = 2;  //şimdilik static yaptım
+            p.AppUserId = 3;  //şimdilik static yaptım
             p.Status = "Onay bekliyor.";
             reservationManager.TAdd(p);
             return RedirectToAction("MyCurrentReservation");  //aktif rezervasyonlarıma yönlendirecek

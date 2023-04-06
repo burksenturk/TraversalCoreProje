@@ -34,7 +34,7 @@ namespace DataAccessLayer.Repository
         public List<T> GetListByFilter(Expression<Func<T, bool>> filter)
         {
             using var c = new Context();
-            return c.Set<T>().Where(filter).ToList();  //T den gelen değer şartım filter dan döecenk olan değer
+            return c.Set<T>().Where(filter).ToList();  
         }
 
         public void Insert(T t)
