@@ -9,5 +9,8 @@ namespace DataAccessLayer.Abstract
 {
     public interface IReservationDal :IGenericDal<Reservation>
     {
+        List<Reservation> GetListWithReservationByWaitApproval(int id); //tabloda lokasyon adını falan göstermek için ektra tanımladım
+        List<Reservation> GetListWithReservationByAccepted(int id);
+        List<Reservation> GetListWithReservationByprevious(int id);
     }
 }
