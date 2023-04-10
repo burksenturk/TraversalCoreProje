@@ -10,9 +10,7 @@ namespace TraversalCoreProje.ViewComponents.Default
         FeatureManager featureManager = new FeatureManager(new EfFeatureDal());
         public IViewComponentResult Invoke()
         {
-            //getlist gerekmiyor viewbag ler ile taşıcaz
-
-			
+            //getlist gerekmiyor viewbag ler ile taşıcaz		
             return View(); 
 
 		}

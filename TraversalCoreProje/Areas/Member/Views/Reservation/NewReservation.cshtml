@@ -6,7 +6,7 @@
 
 <h1>Yeni Rezervasyon sayfası</h1>
 <form method="post">
-    <div class="form-group">
+   <div class="form-group">
         @Html.Label("Lokasyon")
         @Html.DropDownListFor(x => x.Destination,(List<SelectListItem>)ViewBag.v,new {@class = "form-control"})
     </div>
@@ -23,12 +23,13 @@
         <input type="text" asp-for="Desctiption" class="form-control" />
     </div>
     <button type="submit" class="btn btn-outline-success"> Rezervasyon Yap</button>
-@*    <script>
-        window.onload = (function () {
-            alert('Rezervasyonunuz başlangıçta onay bekliyor şeklinde alınacaktır.Rezervasyon onaylanma süreci için "Güncel Rezervasyonlarım" menusunu takip etmeyi unutmayın.');
-        });</script>*@
+
 </form>
 
 
 
 
+@*    <script>
+        window.onload = (function () {
+            alert('Rezervasyonunuz başlangıçta onay bekliyor şeklinde alınacaktır.Rezervasyon onaylanma süreci için "Güncel Rezervasyonlarım" menusunu takip etmeyi unutmayın.');
+        });</script>*@
