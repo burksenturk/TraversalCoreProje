@@ -1,5 +1,6 @@
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.Container;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
@@ -12,8 +13,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -33,16 +36,22 @@ namespace TraversalCoreProje
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //loglama iþlemleri için oluþturdum
+            services.AddLogging(x =>
+            {
+                x.ClearProviders(); //mevcutta saðlayýcýlar varsa temizle çünkü ben kendi loglaarýmý kaydedicem
+                x.SetMinimumLevel(LogLevel.Debug); // loglama iþlemi debug dan itibaren baþlasýn
+                x.AddDebug(); // nereye loglamak istiyoruz. burada output da gözeücek
+            });
+
+
+
+
             services.AddDbContext<Context>(); //amacýmýz Identity yapýsýný  ConfigureServices içerisinde tanýmlamak hem de proje seviyesinde bir authentication uygulamak ki sadece benim istediðim sayfalarda bu authentication kodlarý allowanonymous komutuyla bunu bozabiliriz
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();//Identity yapýlandýramsýný eklemiþ olduk  ConfigureServices A
 
-            services.AddScoped<ICommentService, CommentManager>();
-            services.AddScoped<ICommentDal, EfCommentDal>();
-            services.AddScoped<IDestinationService, DestinationManager>();
-            services.AddScoped<IDestinationDal, EfDestinationDal>();
-            services.AddScoped<IAppUserService, AppUserManager>();
-            services.AddScoped<IAppUserDal, EfAppUserDal>();
-
+            services.ContainerDependencies();  //kod kalabalýðýný container klasörü açarak yok ettik. BusinessLayer Container klsörü
+             
             services.AddControllersWithViews();
 
             //proje seviyesinde bir authentication iþlemi kullanýyor olucaz
@@ -58,8 +67,11 @@ namespace TraversalCoreProje
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            var path = Directory.GetCurrentDirectory();
+            loggerFactory.AddFile($"{path}\\Logs\\Log1.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,6 +83,8 @@ namespace TraversalCoreProje
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404", "?code={0}"); //Hata sayfasna eriþmem için yazdým.
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
