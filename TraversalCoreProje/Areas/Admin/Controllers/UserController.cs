@@ -8,13 +8,15 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IAppUserService  _appUserService;
+        private readonly IReservationService _reservationService;
 
-        public UserController(IAppUserService appUserService)
-        {
-            _appUserService = appUserService;
-        }
+		public UserController(IAppUserService appUserService, IReservationService reservationService)
+		{
+			_appUserService = appUserService;
+			_reservationService = reservationService;
+		}
 
-        public IActionResult Index()
+		public IActionResult Index()
         {
             var values = _appUserService.TGetList();
             return View(values);
@@ -35,15 +37,15 @@ namespace TraversalCoreProje.Areas.Admin.Controllers
             _appUserService.TUpdate(appUser);
             return RedirectToAction("Index");
         }
-        public IActionResult CommentUser()
+        public IActionResult CommentUser() 
         {
             _appUserService.TGetList();
             return View();
         }
-        public IActionResult ReservationUser()
+        public IActionResult ReservationUser(int id)  
         {
-            _appUserService.TGetList();
-            return View();
+            var values = _reservationService.GetListWithReservationByAccepted(id); //Kullanıcının Geçmiş Rezervasyonlarını gösterdim
+            return View(values);
         }
     }
 }
