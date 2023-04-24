@@ -1,10 +1,14 @@
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.Container;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using DTOLayer.DTOs.AnnouncementDTOs;
 using EntityLayer.Concrete;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,15 +48,15 @@ namespace TraversalCoreProje
                 x.AddDebug(); // nereye loglamak istiyoruz. burada output da gözeücek
             });
 
-
-
-
             services.AddDbContext<Context>(); //amacýmýz Identity yapýsýný  ConfigureServices içerisinde tanýmlamak hem de proje seviyesinde bir authentication uygulamak ki sadece benim istediðim sayfalarda bu authentication kodlarý allowanonymous komutuyla bunu bozabiliriz
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();//Identity yapýlandýramsýný eklemiþ olduk  ConfigureServices A
 
             services.ContainerDependencies();  //kod kalabalýðýný container klasörü açarak yok ettik. BusinessLayer Container klsörü
-             
-            services.AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IValidator<AnnouncementAddDTOs>,AnnouncementValidator>();
+
+            services.AddControllersWithViews().AddFluentValidation();
 
             //proje seviyesinde bir authentication iþlemi kullanýyor olucaz
             services.AddMvc(config=>
