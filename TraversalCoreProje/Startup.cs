@@ -38,11 +38,12 @@ namespace TraversalCoreProje
             services.AddDbContext<Context>(); //amacýmýz Identity yapýsýný  ConfigureServices içerisinde tanýmlamak hem de proje seviyesinde bir authentication uygulamak ki sadece benim istediðim sayfalarda bu authentication kodlarý allowanonymous komutuyla bunu bozabiliriz
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();//Identity yapýlandýramsýný eklemiþ olduk  ConfigureServices A
 
+            services.AddHttpClient();
+
             services.ContainerDependencies();  //kod kalabalýðýný container klasörü açarak yok ettik. BusinessLayer Container klsörü
+            
             services.CustomerValidator();
-
             services.AddAutoMapper(typeof(Startup));
-
             services.AddControllersWithViews().AddFluentValidation();
 
             //proje seviyesinde bir authentication iþlemi kullanýyor olucaz
