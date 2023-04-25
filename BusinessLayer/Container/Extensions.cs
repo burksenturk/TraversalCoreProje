@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using BusinessLayer.ValidationRules.AnnouncementValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using DTOLayer.DTOs.AnnouncementDTOs;
@@ -48,6 +49,7 @@ namespace BusinessLayer.Container
 		public static void CustomerValidator(this IServiceCollection services)
 		{
             services.AddTransient<IValidator<AnnouncementAddDto>, AnnouncementValidator>();
+            services.AddTransient<IValidator<AnnouncementUpdateDto>, AnnouncementUpdateValidator>();
 
         }
     }
