@@ -2,11 +2,12 @@
 {
     public class RemoveDestinationCommand
     {
-        public int Id { get; set; }
+		public RemoveDestinationCommand(int id)
+		{
+			Id = id;
+		}
+		public int Id { get; set; }
 
-        public RemoveDestinationCommand(int id)
-        {
-            Id = id;
-        }
+
     }
 }

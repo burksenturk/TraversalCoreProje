@@ -2,6 +2,7 @@ using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,10 @@ namespace TraversalCoreProje
             services.AddScoped<GetAllDestinationQueryHandler>();
             services.AddScoped<GetDestinationByIDQueryHandler>();
             services.AddScoped<CreateDestinationCommandHandler>();
+            services.AddScoped<RemoveDestinationCommandHandler>();
+            services.AddScoped<UpdateDestinationCommandHandler>();
+
+            services.AddMediatR(typeof(Startup));
             //loglama iþlemleri için oluþturdum
             services.AddLogging(x =>
             {
