@@ -65,6 +65,11 @@ namespace TraversalCoreProje
             });
 
             services.AddMvc();
+            //bir kullanýcý autotantice olmadan giriþ yapmýþsa buraya yönlendir...
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login/SignIn/";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
